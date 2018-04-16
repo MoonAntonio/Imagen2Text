@@ -1,10 +1,10 @@
 ﻿//                                  ┌∩┐(◣_◢)┌∩┐
 //																				\\
-// ImageToText.cs (00/00/0000)													\\
+// ImageToText.cs (16/04/2018)													\\
 // Autor: Antonio Mateo (.\Moon Antonio) 	antoniomt.moon@gmail.com			\\
-// Descripcion:																	\\
-// Fecha Mod:		00/00/0000													\\
-// Ultima Mod:																	\\
+// Descripcion:		Clase convertidora de una imagen en texto.					\\
+// Fecha Mod:		16/04/2018													\\
+// Ultima Mod:		Version Inicial												\\
 //******************************************************************************\\
 
 #region Librerias
@@ -13,6 +13,9 @@ using UnityEngine;
 
 namespace MoonAntonio
 {
+	/// <summary>
+	/// <para>Clase convertidora de una imagen en texto.</para>
+	/// </summary>
 	public class ImageToText : MonoBehaviour 
 	{
 
