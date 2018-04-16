@@ -181,11 +181,16 @@ namespace MoonAntonio
 			StringBuilder outData = new StringBuilder();
 			var writer = new StreamWriter(fileStream);
 
-			outData.Append("using UnityEngine;\nusing UnityEditor;\n\n");
+			outData.AppendLine("#region Librerias");
+			outData.Append("using UnityEngine;\n");
+			outData.AppendLine("#endregion\n");
 			outData.Append("namespace MoonAntonio.ResData\n{\n");
 			outData.Append("\tpublic static class " + nombreArchivo + "\n\t{\n");
 
-			outData.AppendLine("\t\tprivate static Texture2D texture;\n");
+			outData.AppendLine("\t\t#region Variables");
+			outData.AppendLine("\t\tprivate static Texture2D texture;");
+			outData.AppendLine("\t\t#endregion\n");
+			outData.AppendLine("\t\t#region Propiedades");
 			outData.AppendLine("\t\tpublic static Texture2D Get()");
 			outData.AppendLine("\t\t{");
 			outData.AppendLine("\t\t\tif( texture == null )");
@@ -196,7 +201,9 @@ namespace MoonAntonio
 			outData.AppendLine("\t\t\t}");
 			outData.AppendLine("\t\t\treturn texture;");
 			outData.AppendLine("\t\t}");
-			outData.AppendLine("\n\t\tprivate static byte[] data = \n\t\t{\t\t\t");
+			outData.AppendLine("\t\t#endregion\n");
+			outData.AppendLine("\t\t#region Data");
+			outData.AppendLine("\t\tprivate static byte[] data = \n\t\t{\t\t\t");
 			for (int i = 0; i < bytes.Length; i++)
 			{
 				if (i % 20 == 0)
@@ -215,7 +222,7 @@ namespace MoonAntonio
 					outData.Append(", ");
 				}
 			}
-			outData.Append("\n\t\t};\n\t}\n}");
+			outData.Append("\n\t\t};\n#endregion\n\t}\n}");
 			writer.Write(outData.ToString());
 			writer.Close();
 			EditorUtility.ClearProgressBar();
