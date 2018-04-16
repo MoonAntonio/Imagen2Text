@@ -9,6 +9,7 @@
 
 #region Librerias
 using UnityEngine;
+using UnityEditor;
 #endregion
 
 namespace MoonAntonio
@@ -16,7 +17,7 @@ namespace MoonAntonio
 	/// <summary>
 	/// <para>Clase convertidora de una imagen en texto.</para>
 	/// </summary>
-	public class ImageToText : MonoBehaviour 
+	public class ImageToText : EditorWindow
 	{
 
 	}
