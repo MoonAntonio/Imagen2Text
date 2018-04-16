@@ -19,6 +19,16 @@ namespace MoonAntonio
 	/// </summary>
 	public class ImageToText : EditorWindow
 	{
+		#region Menu
+		/// <summary>
+		/// <para>Menu de <see cref="ImageToText"/>.</para>
+		/// </summary>
+		[MenuItem("MoonAntonio/Image2Text")]
+		public static void Window()
+		{
+			GetWindow(typeof(ImageToText), true, "Image2Text");
+		}
+		#endregion
 
 	}
 }
