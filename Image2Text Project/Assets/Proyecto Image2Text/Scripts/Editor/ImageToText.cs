@@ -11,6 +11,8 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Text;
+using System;
 #endregion
 
 namespace MoonAntonio
@@ -28,7 +30,13 @@ namespace MoonAntonio
 		#endregion
 
 		#region Variables Privadas
+		/// <summary>
+		/// <para>Nombre del archivo.</para>
+		/// </summary>
 		private string nombreArchivo;
+		/// <summary>
+		/// <para>Nombre del archivo original.</para>
+		/// </summary>
 		private string nombreArchivoOri;
 		/// <summary>
 		/// <para>Direccion de la carpeta contenedora.</para>
@@ -38,7 +46,13 @@ namespace MoonAntonio
 		/// <para>Contiene la dimension de la preview de la imagen.</para>
 		/// </summary>
 		private Rect preImagenRect;
+		/// <summary>
+		/// <para>Data de la imagen.</para>
+		/// </summary>
 		private byte[] data;
+		/// <summary>
+		/// <para>Imagen.</para>
+		/// </summary>
 		private Texture2D preImagen;
 		#endregion
 
@@ -132,7 +146,7 @@ namespace MoonAntonio
 						}
 						else
 						{
-							// Guardar Textura
+							Convertir();
 						}
 					}
 				}
@@ -145,5 +159,68 @@ namespace MoonAntonio
 		}
 		#endregion
 
+		#region Metodos
+		/// <summary>
+		/// <para>Convierte una imagen en bytes.</para>
+		/// </summary>
+		private void Convertir()
+		{
+			byte[] bytes = data;
+
+			var outputFileName = carpetaContenedora + "/" + nombreArchivo + ".cs";
+			FileStream fileStream = null;
+
+			if (!File.Exists(outputFileName))
+			{
+				fileStream = File.Create(outputFileName);
+			}
+			else
+			{
+				fileStream = File.Open(outputFileName, FileMode.Truncate);
+			}
+			StringBuilder outData = new StringBuilder();
+			var writer = new StreamWriter(fileStream);
+
+			outData.Append("using UnityEngine;\nusing UnityEditor;\n\n");
+			outData.Append("namespace MoonAntonio.ResData\n{\n");
+			outData.Append("\tpublic static class " + nombreArchivo + "\n\t{\n");
+
+			outData.AppendLine("\t\tprivate static Texture2D texture;\n");
+			outData.AppendLine("\t\tpublic static Texture2D Get()");
+			outData.AppendLine("\t\t{");
+			outData.AppendLine("\t\t\tif( texture == null )");
+			outData.AppendLine("\t\t\t{");
+			outData.AppendLine("\t\t\t\ttexture = new Texture2D( 2, 2 );");
+			outData.AppendLine("\t\t\t\ttexture.LoadImage( data );");
+			outData.AppendLine("\t\t\t\ttexture.Apply();");
+			outData.AppendLine("\t\t\t}");
+			outData.AppendLine("\t\t\treturn texture;");
+			outData.AppendLine("\t\t}");
+			outData.AppendLine("\n\t\tprivate static byte[] data = \n\t\t{\t\t\t");
+			for (int i = 0; i < bytes.Length; i++)
+			{
+				if (i % 20 == 0)
+				{
+					EditorUtility.DisplayProgressBar("Convirtiendo...", "...", (float)i / bytes.Length);
+					if (i > 0)
+					{
+						outData.Append(writer.NewLine);
+					}
+					outData.Append("\t\t\t");
+				}
+				byte b = bytes[i];
+				outData.Append("0x" + BitConverter.ToString(bytes, i, 1));
+				if (i + 1 < bytes.Length)
+				{
+					outData.Append(", ");
+				}
+			}
+			outData.Append("\n\t\t};\n\t}\n}");
+			writer.Write(outData.ToString());
+			writer.Close();
+			EditorUtility.ClearProgressBar();
+			AssetDatabase.Refresh(ImportAssetOptions.Default);
+		}
+		#endregion
 	}
 }
