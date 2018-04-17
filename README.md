@@ -7,7 +7,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/MoonAntonio/Imagen2Text.svg)](https://github.com/MoonAntonio/Imagen2Text/stargazers)
 
 # Imagen2Text
-Convierte en bytes una imagen
+Convierte en bytes una imagen.
 
 ---
 
