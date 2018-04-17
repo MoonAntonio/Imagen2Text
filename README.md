@@ -11,7 +11,7 @@ Convierte en bytes una imagen
 
 ---
 
-<p align="center"><img src="https://github.com/MoonAntonio/Imagen2Text/blob/master/res/prev.png?raw=true"></p>
+<p align="center"><img src="https://github.com/MoonAntonio/Imagen2Text/blob/master/prev/prev.png?raw=true"></p>
 
 ---
 ## ¿Como usar?
